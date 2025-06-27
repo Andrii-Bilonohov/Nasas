@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Nasas.Application\Nasas.Application.csproj" />
+  </ItemGroup>
+
 </Project>

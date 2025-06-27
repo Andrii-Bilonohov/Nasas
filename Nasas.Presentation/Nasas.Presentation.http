@@ -1,0 +1,6 @@
+@Nasas.Presentation_HostAddress = http://localhost:5015
+
+GET {{Nasas.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

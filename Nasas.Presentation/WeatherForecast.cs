@@ -1,4 +1,4 @@
-namespace Nasas.Api
+namespace Nasas.Presentation
 {
     public class WeatherForecast
     {
