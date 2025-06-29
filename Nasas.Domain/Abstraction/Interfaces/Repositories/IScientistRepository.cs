@@ -1,6 +1,6 @@
 ﻿using Nasas.Domain.Models;
 
-namespace Nasas.Domain.Interfaces.Repositories;
+namespace Nasas.Domain.Abstraction.Interfaces.Repositories;
 
     public interface IScientistRepository
     {

@@ -25,7 +25,7 @@ namespace Nasas.Domain.Models;
 
         public string Status { get; set; }
 
-        public int ScientistId { get; set; }
+        public int? ScientistId { get; set; }
 
         public Scientist Scientist { get; set; }
     }

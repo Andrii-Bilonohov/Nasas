@@ -1,6 +1,6 @@
-﻿
+﻿using Nasas.Domain.Models;
 
-namespace Nasas.Domain.Models;
+namespace Nasas.Domain.Abstraction.Models;
 
     public abstract class User
     {

@@ -1,6 +1,6 @@
-﻿namespace Nasas.Domain.Dtos;
+﻿namespace Nasas.Domain.Dtos.Input;
 
-public class RegisterDtos
+public class RegisterDto
 {
     public string UserName { get; set; }
 

@@ -1,6 +1,6 @@
-﻿namespace Nasas.Domain.Dtos;
+﻿namespace Nasas.Domain.Dtos.Output;
 
-public class LoginDtos
+public class LoginDto
 {
     public string UserName { get; set; }
 
