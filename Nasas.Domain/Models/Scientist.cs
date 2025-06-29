@@ -1,5 +1,7 @@
 ﻿
 
+using Nasas.Domain.Abstraction.Models;
+
 namespace Nasas.Domain.Models;
 
 public class Scientist : User
