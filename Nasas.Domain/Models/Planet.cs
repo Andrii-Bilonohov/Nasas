@@ -17,17 +17,13 @@ namespace Nasas.Domain.Models;
         
         public string? Image { get; set; }
 
-        //public int Period { get; set; }
+        public string Type { get; set; }
 
-        //public double SemiMajorAxis { get; set; }
+        public string  Orbit { get; set; }
 
-        //public int Temperature { get; set; }
+        public string Composition { get; set; }
 
-        //public decimal DistanceLightYear { get; set; }
-
-        //public int HostStarMass { get; set; }
-
-        //public int HostStarTemperature { get; set; }
+        public string Status { get; set; }
 
         public int ScientistId { get; set; }
 

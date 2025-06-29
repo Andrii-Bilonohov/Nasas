@@ -4,7 +4,7 @@ namespace Nasas.Domain.Interfaces.Repositories;
 
     public interface IScientistRepository
     {
-        Task<IEnumerable<Scientist>> GetAllAsync();
+        Task<IEnumerable<Scientist>> GetAllAsync(CancellationToken cancellationToken);
 
         Task<Scientist> AddAsync(Scientist scientist, CancellationToken cancellationToken);
 

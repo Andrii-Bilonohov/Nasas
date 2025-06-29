@@ -10,7 +10,7 @@ namespace Nasas.Domain.Models;
     
         public string LastName { get; set; }
 
-        //public string FullName => $"{LastName} {FirstName}";
+        public string FullName => $"{LastName} {FirstName}";
 
         public Login Login { get; set; }
 }

@@ -4,7 +4,7 @@ namespace Nasas.Domain.Interfaces.Repositories;
 
     public interface ILoginRepository
     {
-        Task<IEnumerable<Login>> GetAllAsync();
+        Task<IEnumerable<Login>> GetAllAsync(CancellationToken cancellationToken);
 
         Task<Login> AddAsync(Login login, CancellationToken cancellationToken);
 
