@@ -1,5 +1,4 @@
-﻿using Nasas.Domain.Abstraction.Models;
-using Nasas.Domain.Models;
+﻿using Nasas.Domain.Models;
 using Nasas.Domain.Dtos.Input;
 
 namespace Nasas.Domain.Abstraction.Interfaces.Services;

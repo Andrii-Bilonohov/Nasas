@@ -1,6 +1,6 @@
-﻿namespace Nasas.Domain.Abstraction.Models;
+﻿namespace Nasas.Domain.Models;
 
-    public abstract class PlanetFilter
+    public  class PlanetFilter
     {
         public string? Name { get; set; }
 
