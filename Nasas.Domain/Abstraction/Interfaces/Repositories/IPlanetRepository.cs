@@ -1,4 +1,5 @@
-﻿using Nasas.Domain.Models;
+﻿using Nasas.Domain.Dtos.Output;
+using Nasas.Domain.Models;
 
 namespace Nasas.Domain.Abstraction.Interfaces.Repositories;
 
@@ -12,7 +13,7 @@ namespace Nasas.Domain.Abstraction.Interfaces.Repositories;
 
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken);
 
-        Task<IEnumerable<Planet>> SearchAsync(Planet planet, CancellationToken cancellationToken);
+        Task<IEnumerable<Planet>> SearchAsync(SearchPlanetDto planet, CancellationToken cancellationToken);
 
-        Task<IEnumerable<Planet>> FilterAsync(Planet planet, CancellationToken cancellationToken);
+        Task<IEnumerable<Planet>> FilterAsync(PlanetFilter planet, CancellationToken cancellationToken);
     }
