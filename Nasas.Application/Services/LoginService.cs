@@ -35,12 +35,17 @@ namespace Nasas.Application.Services
                 throw new ArgumentNullException(nameof(registerDtos));
             }
 
-            await _loginRepository.IsLoginExistsAsync(new Login
+            var existsLogin = await _loginRepository.IsLoginExistsAsync(new Login
             {
                 UserName = registerDtos.UserName,
                 Email = registerDtos.Email,
                 Password = registerDtos.Password,
             }, cancellationToken);
+
+            if (existsLogin)
+            {
+                throw new InvalidOperationException("Login already exists.");
+            }
 
             var newLogin = new Login
             {
