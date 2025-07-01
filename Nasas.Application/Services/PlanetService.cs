@@ -83,7 +83,7 @@ namespace Nasas.Application.Services
         }
 
 
-        public Task<IEnumerable<Planet>> PlanetFilter(PlanetFilter property, CancellationToken cancellationToken)
+        public Task<IEnumerable<Planet>> PlanetFilterAsync(PlanetFilter property, CancellationToken cancellationToken)
         {
             if (property == null)
             {

@@ -5,12 +5,12 @@ using Nasas.Domain.Models;
 
 namespace Nasas.Application.Services
 {
-    public class ScientlistService : IScientistService
+    public class ScientistService : IScientistService
     {
         private readonly IScientistRepository _scientistRepository;
 
 
-        public ScientlistService(IScientistRepository scientistRepository)
+        public ScientistService(IScientistRepository scientistRepository)
         {
             _scientistRepository = scientistRepository ?? throw new ArgumentNullException(nameof(scientistRepository));
         }
