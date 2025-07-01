@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nasas.Application.Services;
 using Nasas.Domain.Abstraction.Interfaces.Repositories;
+using Nasas.Domain.Abstraction.Interfaces.Services;
 using Nasas.Domain.Dtos.Input;
 using Nasas.Domain.Dtos.Output;
 using Nasas.Domain.Models;
@@ -10,12 +12,12 @@ namespace Nasas.Api.Controllers
     [Route("/api/planet")]
     public class PlanetControler : ControllerBase
     {
-        private readonly IPlanetRepository _planetRepository;
+        private readonly IPlanetService _planetService;
 
 
-        public PlanetControler(IPlanetRepository planetRepository)
+        public PlanetControler(IPlanetService planetService)
         {
-            _planetRepository = planetRepository ?? throw new ArgumentNullException(nameof(planetRepository));
+            _planetService = planetService;
         }
 
 
@@ -24,7 +26,7 @@ namespace Nasas.Api.Controllers
         {
             try
             {
-                var planets = await _planetRepository.GetAllAsync(cancellationToken);
+                var planets = await _planetService.GetAllPlanetAsync(cancellationToken);
                 return Ok(planets);
             }
             catch (Exception)
@@ -44,7 +46,7 @@ namespace Nasas.Api.Controllers
 
             try
             {
-                var planets = await _planetRepository.SearchAsync(searchPlanet, cancellationToken);
+                var planets = await _planetService.SearchPlanetAsync(searchPlanet.Name, cancellationToken);
                 return Ok(planets);
             }
             catch (Exception)
@@ -64,7 +66,7 @@ namespace Nasas.Api.Controllers
 
             try
             {
-                var planets = await _planetRepository.FilterAsync(filterPlanet, cancellationToken);
+                var planets = await _planetService.PlanetFilterAsync(filterPlanet, cancellationToken);
                 return Ok(planets);
             }
             catch (Exception)
@@ -97,7 +99,7 @@ namespace Nasas.Api.Controllers
 
             try
             {
-                var addedPlanet = await _planetRepository.AddAsync(planet, cancellationToken);
+                var addedPlanet = await _planetService.AddPlanetAsync(planetDto, cancellationToken);
                 return CreatedAtAction(nameof(GetPlanets), new { id = addedPlanet.Id }, addedPlanet);
             }
             catch (Exception)
@@ -130,7 +132,7 @@ namespace Nasas.Api.Controllers
 
             try
             {
-                var updatedPlanet = await _planetRepository.UpdateAsync(planet, cancellationToken);
+                var updatedPlanet = await _planetService.EditPlanetAsync(planetDto, cancellationToken);
                 return Ok(updatedPlanet);
             }
             catch (Exception)
@@ -147,9 +149,10 @@ namespace Nasas.Api.Controllers
             {
                 return BadRequest("Valid planet ID is required");
             }
+
             try
             {
-                var deleted = await _planetRepository.DeleteAsync(id, cancellationToken);
+                var deleted = await _planetService.DeletePlanetAsync(id, cancellationToken);
                 if (!deleted)
                 {
                     return NotFound("Planet not found");

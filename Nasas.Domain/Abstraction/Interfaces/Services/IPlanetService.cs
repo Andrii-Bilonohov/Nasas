@@ -15,6 +15,5 @@ public interface IPlanetService
 
     Task<IEnumerable<Planet>> SearchPlanetAsync(string name, CancellationToken cancellationToken);
 
-    Task<IEnumerable<Planet>> PlanetFilter(PlanetFilter property, CancellationToken cancellationToken);
-
+    Task<IEnumerable<Planet>> PlanetFilterAsync(PlanetFilter property, CancellationToken cancellationToken);
 }
