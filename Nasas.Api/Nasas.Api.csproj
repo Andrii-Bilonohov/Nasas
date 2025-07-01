@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Nasas.Application\Nasas.Application.csproj" />
+    <ProjectReference Include="..\Nasas.Infrastructure\Nasas.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
