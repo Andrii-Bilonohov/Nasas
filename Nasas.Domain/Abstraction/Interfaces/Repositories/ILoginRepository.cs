@@ -14,5 +14,7 @@ namespace Nasas.Domain.Abstraction.Interfaces.Repositories;
 
         Task<Login> GetLoginAsync(string username, string password, CancellationToken cancellationToken);
 
+        Task<bool> IsLoginExistsAsync(Login login, CancellationToken cancellationToken);
+
 }
 
