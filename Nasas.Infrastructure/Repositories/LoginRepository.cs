@@ -50,7 +50,7 @@ namespace Nasas.Infrastructure.Repositories
 
         public Task<bool> IsLoginExistsAsync(Login login, CancellationToken cancellationToken)
         {
-            return _context.Logins.AnyAsync(l => l.UserName == login.UserName || l.Email == login.Email, cancellationToken);
+            return _context.Logins.AnyAsync(l => l.UserName == login.UserName && l.Password == login.Password, cancellationToken);
         }
 
 
