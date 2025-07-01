@@ -9,7 +9,7 @@ namespace Nasas.Application.Services
     public class LoginService : ILoginService
     {
         private readonly ILoginRepository _loginRepository;
-        
+
 
         public LoginService(ILoginRepository loginRepository)
         {
@@ -17,7 +17,7 @@ namespace Nasas.Application.Services
         }
 
 
-        public async Task<bool> LoginAsync(LoginDto loginDtos, CancellationToken cancellationToken)
+        public async Task<Login> LoginAsync(LoginDto loginDtos, CancellationToken cancellationToken)
         {
 
             if (loginDtos == null)
@@ -25,18 +25,13 @@ namespace Nasas.Application.Services
                 throw new ArgumentNullException(nameof(loginDtos), "LoginDto cannot be null");
             }
 
-            var logins = await _loginRepository.GetAllAsync(cancellationToken);
-
-            var login = logins.FirstOrDefault(l => l.UserName == loginDtos.UserName && l.Password == loginDtos.Password);
-
-            if (login != null)
+            var login = await _loginRepository.GetLoginAsync(loginDtos.UserName, loginDtos.Password, cancellationToken);
+            if (login == null)
             {
-
-                return true;
+                throw new ArgumentNullException(nameof(login), "Login cannot be null");
             }
 
-
-            return false; 
+            return login;
         }
 
 
@@ -47,12 +42,7 @@ namespace Nasas.Application.Services
                 throw new ArgumentNullException(nameof(registerDtos), "RegisterDto cannot be null");
             }
 
-            var existingLogins = await _loginRepository.GetAllAsync(cancellationToken);
-
-            if (existingLogins.Any(l => l.UserName == registerDtos.UserName))
-            {
-                return false; 
-            }
+            var existingLogins = await IsExistingLogin(registerDtos);
 
             var newLogin = new Login
             {
@@ -64,6 +54,19 @@ namespace Nasas.Application.Services
             await _loginRepository.AddAsync(newLogin, cancellationToken);
 
             return true;
+        }
+
+
+        private async Task<bool> IsExistingLogin(RegisterDto registerDtos)
+        {
+            if (registerDtos == null)
+            {
+                throw new ArgumentNullException(nameof(registerDtos), "RegisterDto cannot be null");
+            }
+
+            var existingLogins = await _loginRepository.GetAllAsync(CancellationToken.None);
+
+            return existingLogins.Any(l => l.UserName == registerDtos.UserName && l.Password == registerDtos.Password);
         }
     }
 }

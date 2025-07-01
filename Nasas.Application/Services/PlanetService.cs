@@ -1,6 +1,7 @@
 ﻿using Nasas.Domain.Abstraction.Interfaces.Repositories;
 using Nasas.Domain.Abstraction.Interfaces.Services;
 using Nasas.Domain.Dtos.Input;
+using Nasas.Domain.Dtos.Output;
 using Nasas.Domain.Models;
 
 namespace Nasas.Application.Services
@@ -51,7 +52,7 @@ namespace Nasas.Application.Services
         }
 
 
-        public async Task<Planet> EditPlanetAsync(EditPlanetDto planet, CancellationToken cancellationToken)
+        public Task<Planet> EditPlanetAsync(EditPlanetDto planet, CancellationToken cancellationToken)
         {
             if (planet == null)
             {
@@ -71,7 +72,7 @@ namespace Nasas.Application.Services
                 Status = planet.Status
             };
 
-            return await _planetRepository.UpdateAsync(existingPlanet, cancellationToken);
+            return  _planetRepository.UpdateAsync(existingPlanet, cancellationToken);
         }
 
 
@@ -88,7 +89,7 @@ namespace Nasas.Application.Services
                 throw new ArgumentNullException(nameof(property), "PlanetFilter cannot be null");
             }
 
-            var planets = await _planetRepository.GetAllAsync(cancellationToken);
+            var planets = await _planetRepository.FilterAsync(property, cancellationToken);
 
             if (!string.IsNullOrEmpty(property.Name))
             {
@@ -110,7 +111,7 @@ namespace Nasas.Application.Services
                 throw new ArgumentException("Planet name cannot be null or empty", nameof(name));
             }
 
-            var planets = await _planetRepository.GetAllAsync(cancellationToken);
+            var planets = await _planetRepository.SearchAsync(new SearchPlanetDto { Name = name }, cancellationToken);
 
             return planets.Where(p => p.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
         }
