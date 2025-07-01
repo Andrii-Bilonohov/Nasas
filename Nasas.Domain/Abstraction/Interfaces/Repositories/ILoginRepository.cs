@@ -12,7 +12,7 @@ namespace Nasas.Domain.Abstraction.Interfaces.Repositories;
 
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken);
 
-        Task<Login> GetLoginAsync(string username, string password);
+        Task<Login> GetLoginAsync(string username, string password, CancellationToken cancellationToken);
 
 }
 
