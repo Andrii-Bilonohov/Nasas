@@ -6,7 +6,7 @@ public class Login
 {
     public int Id { get; set; }
 
-    public string UserName { get; set; }
+    public string Username => $"{User.FirstName}{User.LastName}".ToLowerInvariant();
 
     public string Email { get; set; }
 
