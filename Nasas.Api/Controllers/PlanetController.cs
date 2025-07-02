@@ -85,7 +85,7 @@ namespace Nasas.Api.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> PutPlanet([FromBody] EditPlanetDto planetDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdatePlanet([FromBody] EditPlanetDto planetDto, CancellationToken cancellationToken)
         {
             if (planetDto == null)
                 return BadRequest("Valid planet data is required");
@@ -103,7 +103,7 @@ namespace Nasas.Api.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlanet(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeletePlanet([FromRoute] int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
                 return BadRequest("Valid planet ID is required");

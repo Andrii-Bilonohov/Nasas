@@ -49,8 +49,8 @@ namespace Nasas.Api.Controllers
         }
 
 
-        [HttpPut()]
-        public async Task<IActionResult> UpdateScientist(int id, [FromBody] ScientistDto scientist, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> UpdateScientist([FromBody] ScientistDto scientist, CancellationToken cancellationToken)
         {
             if (scientist == null)
             {
@@ -70,7 +70,7 @@ namespace Nasas.Api.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteScientist(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteScientist([FromRoute] int id, CancellationToken cancellationToken)
         {
             try
             {
