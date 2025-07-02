@@ -50,7 +50,7 @@ namespace Nasas.Api.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateScientist([FromBody] ScientistDto scientist, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateScientist([FromRoute] int id, [FromBody] ScientistDto scientist, CancellationToken cancellationToken)
         {
             if (scientist == null)
             {

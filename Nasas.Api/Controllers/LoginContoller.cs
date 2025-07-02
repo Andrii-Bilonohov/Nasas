@@ -11,12 +11,14 @@ namespace Nasas.Api.Controllers
     {
         private readonly ILoginService _loginService;
 
+
         public LoginContoller(ILoginService loginService)
         {
             _loginService = loginService ?? throw new ArgumentNullException(nameof(loginService));
         }
 
-        [HttpPost("{login}")]
+
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto login, CancellationToken cancellationToken)
         {
             if (login == null)
@@ -41,6 +43,7 @@ namespace Nasas.Api.Controllers
 
 
         [HttpPost]
+        [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto, CancellationToken cancellationToken)
         {
             if (registerDto == null)
