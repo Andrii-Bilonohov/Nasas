@@ -17,21 +17,6 @@ namespace Nasas.Infrastructure.Data
         public DbSet<Login> Logins { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var config = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-
-                var connectionString = config.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ScientistConfiguration());
