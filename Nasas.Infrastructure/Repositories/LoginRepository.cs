@@ -44,13 +44,13 @@ namespace Nasas.Infrastructure.Repositories
         {
             return await _context.Logins
                 .Include(l => l.User)
-                .FirstOrDefaultAsync(l => l.Username == username && l.Password == password, cancellationToken);
+                .FirstOrDefaultAsync(l => l.UserName == username && l.Password == password, cancellationToken);
         }
 
 
         public Task<bool> IsLoginExistsAsync(Login login, CancellationToken cancellationToken)
         {
-            return _context.Logins.AnyAsync(l => l.Username == login.Username && l.Password == login.Password, cancellationToken);
+            return _context.Logins.AnyAsync(l => l.UserName == login.UserName && l.Password == login.Password, cancellationToken);
         }
 
 
