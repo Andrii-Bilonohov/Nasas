@@ -41,15 +41,6 @@ namespace Nasas.Infrastructure.Repositories
         }
 
 
-        public Task<Scientist?> GetScientistAsync(Scientist scientist, CancellationToken cancellationToken)
-        {
-            return _context.Scientists
-                .Include(s => s.Planets)
-                .Include(s => s.FullName)
-                .FirstOrDefaultAsync(s => s.Id == scientist.Id, cancellationToken);
-        }
-
-
         public async Task<Scientist> UpdateAsync(Scientist scientist, CancellationToken cancellationToken)
         {
             _context.Scientists.Update(scientist);
