@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Nasas.Domain\Nasas.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\Input\" />
-  </ItemGroup>
-
 </Project>

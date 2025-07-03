@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nasas.Application.Services;
+using Nasas.Domain.Abstraction.Interfaces.Repositories;
 using Nasas.Domain.Abstraction.Interfaces.Services;
 using Nasas.Domain.Dtos.Input;
+using Nasas.Domain.Dtos.Output;
 using Nasas.Domain.Models;
 
 namespace Nasas.Api.Controllers
 {
     [ApiController]
-    [Route("api/planets")]
-    public class PlanetController : ControllerBase
+    [Route("/api/planet")]
+    public class PlanetControler : ControllerBase
     {
         private readonly IPlanetService _planetService;
 
 
-        public PlanetController(IPlanetService planetService)
+        public PlanetControler(IPlanetService planetService)
         {
             _planetService = planetService;
         }
@@ -34,14 +37,16 @@ namespace Nasas.Api.Controllers
 
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchPlanets([FromQuery] string name, CancellationToken cancellationToken)
+        public async Task<IActionResult> SearchPlanets(SearchPlanetDto searchPlanet, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (searchPlanet == null)
+            {
                 return BadRequest("Search criteria is required");
+            }
 
             try
             {
-                var planets = await _planetService.SearchPlanetAsync(name, cancellationToken);
+                var planets = await _planetService.SearchPlanetAsync(searchPlanet.Name, cancellationToken);
                 return Ok(planets);
             }
             catch (Exception)
@@ -52,8 +57,13 @@ namespace Nasas.Api.Controllers
 
 
         [HttpGet("filter")]
-        public async Task<IActionResult> FilterPlanets([FromQuery] PlanetFilter filterPlanet, CancellationToken cancellationToken)
+        public async Task<IActionResult> FilterPlanets(PlanetFilter filterPlanet, CancellationToken cancellationToken)
         {
+            if (filterPlanet == null)
+            {
+                return BadRequest("Filter criteria is required");
+            }
+
             try
             {
                 var planets = await _planetService.PlanetFilterAsync(filterPlanet, cancellationToken);
@@ -67,10 +77,25 @@ namespace Nasas.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddPlanet([FromBody] CreatePlanetDto planetDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddPlanet(CreatePlanetDto planetDto, CancellationToken cancellationToken)
         {
             if (planetDto == null)
+            {
                 return BadRequest("Planet data is required");
+            }
+
+            var planet = new Planet
+            {
+                Name = planetDto.Name,
+                Radius = planetDto.Radius,
+                Mass = planetDto.Mass,
+                Age = planetDto.Age,
+                Image = planetDto.Image,
+                Type = planetDto.Type,
+                Orbit = planetDto.Orbit,
+                Composition = planetDto.Composition,
+                Status = planetDto.Status,
+            };
 
             try
             {
@@ -85,10 +110,25 @@ namespace Nasas.Api.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePlanet([FromRoute] int id, [FromBody] EditPlanetDto planetDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutPlanet(EditPlanetDto planetDto, CancellationToken cancellationToken)
         {
             if (planetDto == null)
+            {
                 return BadRequest("Valid planet data is required");
+            }
+
+            var planet = new Planet
+            {
+                Name = planetDto.Name,
+                Radius = planetDto.Radius,
+                Mass = planetDto.Mass,
+                Age = planetDto.Age,
+                Image = planetDto.Image,
+                Type = planetDto.Type,
+                Orbit = planetDto.Orbit,
+                Composition = planetDto.Composition,
+                Status = planetDto.Status,
+            };
 
             try
             {
@@ -102,18 +142,21 @@ namespace Nasas.Api.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlanet([FromRoute] int id, CancellationToken cancellationToken)
+        [HttpDelete]
+        public async Task<IActionResult> DeletePlanet(int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
+            {
                 return BadRequest("Valid planet ID is required");
+            }
 
             try
             {
                 var deleted = await _planetService.DeletePlanetAsync(id, cancellationToken);
                 if (!deleted)
+                {
                     return NotFound("Planet not found");
-
+                }
                 return NoContent();
             }
             catch (Exception)
