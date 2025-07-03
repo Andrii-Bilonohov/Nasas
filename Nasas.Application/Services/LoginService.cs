@@ -37,7 +37,7 @@ namespace Nasas.Application.Services
 
             var existsLogin = await _loginRepository.IsLoginExistsAsync(new Login
             {
-                UserName = registerDtos.UserName,
+                Username = registerDtos.Username,
                 Email = registerDtos.Email,
                 Password = registerDtos.Password,
             }, cancellationToken);
@@ -49,7 +49,7 @@ namespace Nasas.Application.Services
 
             var newLogin = new Login
             {
-                UserName = registerDtos.UserName,
+                Username = registerDtos.Username,
                 Email = registerDtos.Email,
                 Password = registerDtos.Password,
             };
