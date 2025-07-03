@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add</title>
+    <link rel="stylesheet" href="/ActionWithPlanet/add/style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">
+        <img
+          src="/main/image/without fone.png"
+          class="logo"
+          alt="NASAS logo"
+          style="cursor: pointer"
+        />
+      </a>
+    </header>
+
+    <main class="add-page">
+      <div id="uploadImage" style="margin: 0 auto">
+        <img src="/ActionWithPlanet/image/frage.png" class="img" />
+      </div>
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+        style="display: none"
+      />
+
+      <h2>Add a New Planet</h2>
+      <form class="add-form">
+        <label>
+          Name:
+          <input type="text" placeholder="Planet name" required />
+        </label>
+        <label>
+          Mass:
+          <input type="text" placeholder="Mass" required />
+        </label>
+        <label>
+          Radius:
+          <input type="text" placeholder="Radius" required />
+        </label>
+        <label>
+          Age:
+          <input type="text" placeholder="Age" required />
+        </label>
+        <label>
+          Period:
+          <input type="text" placeholder="Period" required />
+        </label>
+
+        <div style="display: flex; gap: 10px">
+          <button
+            type="button"
+            style="flex: 1"
+            onclick="window.location.href='/second_page/index.html'"
+          >
+            Cancel
+          </button>
+          <button type="submit" style="flex: 1">Edit Planet</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

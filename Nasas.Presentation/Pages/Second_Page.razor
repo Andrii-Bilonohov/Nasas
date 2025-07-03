@@ -1,0 +1,171 @@
+﻿@page "/Planets"
+@using Nasas.Application.Dtos.Output
+@inject HttpClient Http
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Planet Page</title>
+    <link rel="stylesheet" href="/css/second_page/style.css" />
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="/css/main/image/without fone.png"
+                 class="logo"
+                 alt="NASAS logo"
+                 style="cursor: pointer" />
+        </a>
+    </header>
+
+    <main>
+        <div class="top-bar">
+            <form class="search-form">
+                <input type="text" placeholder="Search planet..." @bind="searchName" />
+                <button @onclick="SearchPlanet" type="submit">Search</button>
+            </form>
+
+            <div class="actions">
+                <a href="/Add" class="action-card">
+                    <div class="icon">➕</div>
+                    <p><strong>Add</strong></p>
+                </a>
+                <a href="/Edit" class="action-card">
+                    <div class="icon">✏️</div>
+                    <p><em>Edit</em></p>
+                </a>
+                <a href="/Remove" class="action-card">
+                    <div class="icon">🗑️</div>
+                    <p>Delete</p>
+                </a>
+            </div>
+            <button class="filter">Filter</button>
+
+            <!-- Модальне вікно -->
+            <div class="modal" id="filterModal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3 style="color: black">Select filtering options</h3>
+
+                    <form id="filterForm">
+                        <label>
+                            Type:
+                            <select name="type" required>
+                                <option disabled selected>Type</option>
+                                <option>Name</option>
+                                <option>Radius</option>
+                            </select>
+                        </label>
+                        <div class="modal-buttons">
+                            <button type="submit" class="apply-btn">Apply</button>
+                            <button type="button" class="cancel-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @if (planets != null)
+        {
+            foreach (var planet in planets)
+            {
+                <section class="planet-card">
+                    <img src="@planet.Image" alt="@planet.Name" />
+                    <div class="planet-info">
+                        <h2>@planet.Name</h2>
+                        <p><strong>Mass:</strong> @planet.Mass</p>
+                        <p><strong>Radius:</strong> @planet.Radius</p>
+                        <p><strong>Age:</strong> @planet.Age</p>
+                        <p><strong>Type:</strong> @planet.Type</p>
+                        <p><strong>Orbit:</strong> @planet.Orbit</p>
+                        <p><strong>Composition:</strong> @planet.Composition</p>
+                        <p><strong>Status:</strong> @planet.Status</p>
+                    </div>
+                </section>
+            }
+        }
+        else if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <p style="color:red">@errorMessage</p>
+        }
+    </main>
+
+    <footer>
+        <a href="/">
+            <img src="/css/main/image/without fone.png"
+                 class="logo"
+                 alt="NASAS logo"
+                 style="cursor: pointer" />
+        </a>
+        <div class="social">
+            <p>Follow Us!!!</p>
+            <div class="icons">
+                <span>📸</span>
+                <span>🎵</span>
+                <span>📘</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const filterBtn = document.querySelector(".filter");
+        const modal = document.getElementById("filterModal");
+        const closeBtn = modal.querySelector(".close");
+        const cancelBtn = modal.querySelector(".cancel-btn");
+        const form = document.getElementById("filterForm");
+        filterBtn.addEventListener("click", () => {
+            modal.style.display = "block";
+        });
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+            form.reset();
+        });
+        cancelBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+            form.reset();
+        });
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                form.reset();
+            }
+        });
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            modal.style.display = "none";
+            form.reset();
+        });
+    </script>
+</body>
+</html>
+
+@code {
+    private List<PlanetOutput>? planets;
+    private string searchName = "";
+    private string errorMessage;
+
+    private async Task SearchPlanet()
+    {
+        try
+        {
+            var response = await Http.GetAsync($"https://localhost:7204/api/planet");
+
+
+            if (!response.IsSuccessStatusCode)
+            {
+                errorMessage = "Planet not found.";
+                planets = null;
+                return;
+            }
+
+            planets = await response.Content.ReadFromJsonAsync<List<PlanetOutput>>();
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+            planets = null;
+        }
+    }
+}

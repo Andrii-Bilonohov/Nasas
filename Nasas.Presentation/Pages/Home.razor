@@ -2,6 +2,134 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NASAS</title>
+    <link rel="stylesheet" href="/css/main/style.css" />
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <img src="/css/main/image/without fone.png" class="logo" />
+            <img src="/css/main/image/solar-system.png"
+                 alt="solar-system"
+                 onclick="scrollDown()"
+                 style="cursor: pointer" />
 
-Welcome to your new app.
+            <div class="register">
+                <a href="/Register">Register as scientist</a>
+            </div>
+        </div>
+
+        <div class="earth-container">
+            <img src="/css/main/image/back.png" alt="Earth" class="earth-image" />
+            <div class="blue-line"></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="target"></div>
+        <div class="solar-system">
+            <div class="sun"
+                 onclick="window.location.href='/Planets'">
+                All planets
+            </div>
+
+            <!-- Орбіти -->
+            <div class="orbit" style="width: 160px; height: 160px"></div>
+            <div class="orbit" style="width: 220px; height: 220px"></div>
+            <div class="orbit" style="width: 300px; height: 300px"></div>
+            <div class="orbit" style="width: 380px; height: 380px"></div>
+            <div class="orbit" style="width: 500px; height: 500px"></div>
+            <div class="orbit" style="width: 600px; height: 600px"></div>
+            <div class="orbit" style="width: 700px; height: 700px"></div>
+            <div class="orbit" style="width: 800px; height: 800px"></div>
+
+            <!-- Планети -->
+            <div class="planet"
+                 style="width: 10px; height: 10px; background: #a9a9a9"
+                 data-name="Меркурій"
+                 data-radius="80"></div>
+            <div class="planet"
+                 style="width: 14px; height: 14px; background: #e6c229"
+                 data-name="Венера"
+                 data-radius="110"></div>
+            <div class="planet"
+                 style="width: 14px; height: 14px; background: #1e90ff"
+                 data-name="Земля"
+                 data-radius="150"></div>
+            <div class="planet"
+                 style="width: 12px; height: 12px; background: #c1440e"
+                 data-name="Марс"
+                 data-radius="190"></div>
+            <div class="planet"
+                 style="width: 22px; height: 22px; background: #c88b3a"
+                 data-name="Юпітер"
+                 data-radius="250"></div>
+            <div class="planet"
+                 style="width: 20px; height: 20px; background: #e4d191"
+                 data-name="Сатурн"
+                 data-radius="300"></div>
+            <div class="planet"
+                 style="width: 16px; height: 16px; background: #d1e7e7"
+                 data-name="Уран"
+                 data-radius="350"></div>
+            <div class="planet"
+                 style="width: 16px; height: 16px; background: #5b5ddf"
+                 data-name="Нептун"
+                 data-radius="400"></div>
+        </div>
+        <body>
+            <a href="/Second_Page"
+               class="glow-button"
+               style="width: 120px">Перейти</a>
+        </body>
+    </main>
+
+    <footer class="backBlack">
+        <div class="footer-left">
+            <div class="logo">NASAS</div>
+        </div>
+        <div class="footer-right">
+            <p>Follow Us!!!</p>
+            <div class="social-icons">
+                <img src="/css/main/image/instagram123.png" />
+                <div>instagram</div>
+                <img src="/css/main/image/TikTok.jpg" />
+                <div>tik tok</div>
+                <img src="/css/main/image/facebook.jpg" />
+                <div>facebook</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const centerX = 400; // Центр контейнера (800 / 2)
+        const centerY = 400;
+
+        document.querySelectorAll(".planet").forEach((planet) => {
+            const radius = parseInt(planet.getAttribute("data-radius"), 10);
+            const angle = Math.random() * 2 * Math.PI;
+
+            const planetSize = planet.offsetWidth;
+            const x = centerX + radius * Math.cos(angle) - planetSize / 2;
+            const y = centerY + radius * Math.sin(angle) - planetSize / 2;
+
+            planet.style.left = `${x}px`;
+            planet.style.top = `${y}px`;
+        });
+        function scrollDown() {
+            document
+                .getElementById("target")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+    </script>
+</body>
+</html>
+
+@code {
+
+}

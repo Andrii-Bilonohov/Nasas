@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Planet Page</title>
+    <link rel="stylesheet" href="/second_page/style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">
+        <img
+          src="/main/image/without fone.png"
+          class="logo"
+          alt="NASAS logo"
+          style="cursor: pointer"
+        />
+      </a>
+    </header>
+
+    <main>
+      <div class="top-bar">
+        <form class="search-form">
+          <input type="text" placeholder="Search planet..." />
+          <button type="submit">Search</button>
+        </form>
+
+        <div class="actions">
+          <a href="/Add" class="action-card">
+            <div class="icon">➕</div>
+            <p><strong>Add</strong></p>
+          </a>
+          <a href="/Edit" class="action-card">
+            <div class="icon">✏️</div>
+            <p><em>Edit</em></p>
+          </a>
+          <a href="/Remove" class="action-card">
+            <div class="icon">🗑️</div>
+            <p>Delete</p>
+          </a>
+        </div>
+        <button class="filter">Filter</button>
+
+        <!-- Модальне вікно -->
+        <div class="modal" id="filterModal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 style="color: black">Select filtering options</h3>
+
+            <form id="filterForm">
+              <label>
+                Type:
+                <select name="type" required>
+                  <option disabled selected>Type</option>
+                  <option>Stony</option>
+                  <option>Gas</option>
+                  <option>Ice</option>
+                  <option>Super Earth</option>
+                  <option>dwarf</option>
+                  <option>Exoplanet</option>
+                </select>
+              </label>
+
+              <label>
+                Orbit:
+                <select name="orbit" required>
+                  <option disabled selected>Orbit</option>
+                  <option>In the living area</option>
+                  <option>Resonant</option>
+                  <option>Free-floating</option>
+                </select>
+              </label>
+
+              <label>
+                Mass:
+                <select name="mass" required>
+                  <option disabled selected>Mass</option>
+                  <option>&lt; Earth</option>
+                  <option>~ Earth</option>
+                  <option>&gt; Earth</option>
+                  <option>Giant</option>
+                </select>
+              </label>
+
+              <label>
+                Staf:
+                <select name="composition" required>
+                  <option disabled selected>Staf</option>
+                  <option>Iron</option>
+                  <option>Ugletseva</option>
+                  <option>Water</option>
+                </select>
+              </label>
+
+              <label>
+                State:
+                <select name="state" required>
+                  <option disabled selected>State</option>
+                  <option>Suitable for life</option>
+                  <option>Not suitable for life</option>
+                </select>
+              </label>
+
+              <div class="modal-buttons">
+                <button type="submit" class="apply-btn">Apply</button>
+                <button type="button" class="cancel-btn">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <section class="planet-card">
+        <img src="image/Mars.jpg" alt="Mars" />
+        <div class="planet-info">
+          <h2>MARS</h2>
+          <p><strong>Mass:</strong></p>
+          <p><strong>Radius:</strong></p>
+          <p><strong>Age:</strong></p>
+          <p><strong>Period:</strong></p>
+
+          <p><strong>Kind: </strong></p>
+          <p><strong>Orbit: </strong></p>
+          <p><strong>Mass: </strong></p>
+          <p><strong>Include: </strong></p>
+          <p><strong>Health: </strong></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/main/index.html">
+        <img
+          src="/main/image/without fone.png"
+          class="logo"
+          alt="NASAS logo"
+          style="cursor: pointer"
+        />
+      </a>
+      <div class="social">
+        <p>Follow Us!!!</p>
+        <div class="icons">
+          <span>📸</span>
+          <span>🎵</span>
+          <span>📘</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const filterBtn = document.querySelector(".filter");
+      const modal = document.getElementById("filterModal");
+      const closeBtn = modal.querySelector(".close");
+      const cancelBtn = modal.querySelector(".cancel-btn");
+      const form = document.getElementById("filterForm");
+      filterBtn.addEventListener("click", () => {
+        modal.style.display = "block";
+      });
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        form.reset();
+      });
+      cancelBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        form.reset();
+      });
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          form.reset();
+        }
+      });
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        modal.style.display = "none";
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
