@@ -1,16 +1,17 @@
 ﻿using Nasas.Domain.Abstraction.Interfaces.Repositories;
 using Nasas.Domain.Abstraction.Interfaces.Services;
 using Nasas.Domain.Dtos.Input;
+using Nasas.Domain.Dtos.Output;
 using Nasas.Domain.Models;
 
 namespace Nasas.Application.Services
 {
-    public class ScientlistService : IScientistService
+    public class ScientistService : IScientistService
     {
         private readonly IScientistRepository _scientistRepository;
 
 
-        public ScientlistService(IScientistRepository scientistRepository)
+        public ScientistService(IScientistRepository scientistRepository)
         {
             _scientistRepository = scientistRepository ?? throw new ArgumentNullException(nameof(scientistRepository));
         }
@@ -63,6 +64,23 @@ namespace Nasas.Application.Services
         public Task<IEnumerable<Scientist>> GetAllScientistAsync(CancellationToken cancellationToken)
         {
             return _scientistRepository.GetAllAsync(cancellationToken);
+        }
+
+
+        public Task<Scientist> GetScientistAsync(ScientistOutput scientist, CancellationToken cancellationToken)
+        {
+            if (scientist == null)
+            {
+                throw new ArgumentNullException(nameof(scientist));
+            }
+
+            var scientistModel = new Scientist
+            {
+                FirstName = scientist.FirstName,
+                LastName = scientist.LastName
+            };
+
+            return _scientistRepository.GetScientistAsync(scientistModel, cancellationToken);
         }
     }
 }
