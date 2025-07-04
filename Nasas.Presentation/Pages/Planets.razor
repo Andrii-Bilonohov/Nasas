@@ -22,9 +22,9 @@
 
     <main>
         <div class="top-bar">
-            <form class="search-form">
-                <input type="text" placeholder="Search planet..." @bind="searchName" />
-                <button @onclick="SearchPlanet" type="submit">Search</button>
+            <form class="search-form" @onsubmit="OnSearchSubmit" @onsubmit:preventDefault>
+                <input type="text" placeholder="Search planet..." @bind="searchName" @bind:event="oninput" />
+                <button type="submit">Search</button>
             </form>
 
             <div class="actions">
@@ -43,7 +43,7 @@
             </div>
             <button class="filter">Filter</button>
 
-            <!-- Модальне вікно -->
+            <!-- Модальное окно -->
             <div class="modal" id="filterModal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-        @if (planets != null)
+        @if (planets != null && planets.Count > 0)
         {
             foreach (var planet in planets)
             {
@@ -86,9 +86,13 @@
                 </section>
             }
         }
-        else if (!string.IsNullOrEmpty(errorMessage))
+        else if (planets != null && planets.Count == 0)
         {
-            <p style="color:red">@errorMessage</p>
+            <p>No planets found for '@searchName'</p>
+        }
+        else
+        {
+            <p>Loading...</p>
         }
     </main>
 
@@ -108,6 +112,7 @@
             </div>
         </div>
     </footer>
+
     <script>
         const filterBtn = document.querySelector(".filter");
         const modal = document.getElementById("filterModal");
@@ -143,29 +148,43 @@
 @code {
     private List<PlanetOutput>? planets;
     private string searchName = "";
-    private string errorMessage;
 
-    private async Task SearchPlanet()
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPlanets();
+    }
+
+    // Загружает планеты с учетом поискового параметра
+    private async Task LoadPlanets()
     {
         try
         {
-            var response = await Http.GetAsync($"https://localhost:7204/api/planet");
+            string url = "https://localhost:7204/api/planet";
 
+            if (!string.IsNullOrWhiteSpace(searchName))
+            {
+                url += $"?name={Uri.EscapeDataString(searchName)}";
+            }
+
+            var response = await Http.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
             {
-                errorMessage = "Planet not found.";
-                planets = null;
+                planets = new List<PlanetOutput>();
                 return;
             }
 
             planets = await response.Content.ReadFromJsonAsync<List<PlanetOutput>>();
-            errorMessage = null;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            errorMessage = $"Error: {ex.Message}";
-            planets = null;
+            planets = new List<PlanetOutput>();
         }
+    }
+
+    // Вызывается при сабмите формы
+    private async Task OnSearchSubmit()
+    {
+        await LoadPlanets();
     }
 }
